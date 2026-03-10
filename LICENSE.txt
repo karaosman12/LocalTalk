@@ -1,0 +1,11 @@
+Copyright (c) 2026 karaosman12
+
+LocalTalk yazılımı eğitim amaçlı kullanılabilir ve kişisel kullanım için değiştirilebilir.  
+
+Ancak:
+
+1. Kod **herhangi bir platformda izinsiz olarak paylaşılamaz veya yayınlanamaz**.  
+2. Kodun **ticari amaçlı kullanımı** yasaktır.  
+3. Yasadışı veya kötü niyetli kullanım durumunda sorumluluk yazarı bağlamaz.
+
+Bu yazılımı kullanarak yukarıdaki kuralları kabul etmiş sayılırsınız.
