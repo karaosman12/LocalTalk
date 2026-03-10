@@ -1,3 +1,4 @@
+LocalTalk – Internet-free LAN chat app, anonymous messaging, file sharing, Node.js project by karaosman12.
 # 🎙️ LocalTalk
 
 **LocalTalk** — internet bağlantısı gerektirmeyen, **LAN (yerel ağ)** üzerinde çalışan gerçek zamanlı sohbet ve dosya paylaşım sistemidir.  
