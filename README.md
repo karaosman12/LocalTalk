@@ -547,8 +547,7 @@ Proje Fikri & Yönetimi: Ali Karaosman
 Kod Geliştirme: Ali Karaosman + AI Asistan (Claude, Anthropic)
 Test & Hata Ayıklama: Ali Karaosman
 
-</div>
-<div align="center">
+
 ⭐ Bu projeyi beğendiyseniz yıldız vermeyi unutmayın! ⭐
 
-</div> ```
+ ```
