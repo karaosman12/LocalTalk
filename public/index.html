@@ -135,12 +135,28 @@ function setupScroll(){var ms=document.getElementById('MS');ms.addEventListener(
 function updSB(){var b=document.getElementById('SCBTN'),c=document.getElementById('SCNT');if(!isAtBottom){b.classList.add('show');if(newMsgCount>0){c.textContent=newMsgCount;c.classList.add('show')}else c.classList.remove('show')}else{b.classList.remove('show');c.classList.remove('show')}}
 function scrollBottom(){var ms=document.getElementById('MS');ms.scrollTop=ms.scrollHeight;newMsgCount=0;isAtBottom=true;updSB()}
 
-fetch('/api/identity').then(function(r){return r.json()}).then(function(d){if(d.registered&&d.name){me=d.name;myUid=d.uid;document.getElementById('NI').style.display='none';document.getElementById('LW').style.display='block';document.getElementById('LW').textContent='Hosgeldin, '+d.name+'!';document.getElementById('LBTN').textContent='Giris Yap';document.getElementById('LBTN').onclick=function(){S.emit('join')}}}).catch(function(){});
+var ctrl=new AbortController();
+var tid=setTimeout(function(){ctrl.abort()},3000);
+fetch('/api/identity',{signal:ctrl.signal}).then(function(r){clearTimeout(tid);return r.json()}).then(function(d){
+    if(d.registered&&d.name){
+        me=d.name;myUid=d.uid;
+        document.getElementById('NI').style.display='none';
+        document.getElementById('LW').style.display='block';
+        document.getElementById('LW').textContent='Hosgeldin, '+d.name+'!';
+        document.getElementById('LBTN').textContent='Giris Yap';
+        document.getElementById('LBTN').onclick=function(){S.emit('join')};
+    }
+}).catch(function(){
+    clearTimeout(tid);
+    document.getElementById('NI').style.display='block';
+    document.getElementById('LW').style.display='none';
+    document.getElementById('LBTN').textContent='Kayit Ol';
+    document.getElementById('LBTN').onclick=function(){doReg()};
+});
 if('Notification' in window)Notification.requestPermission();
 document.addEventListener('paste',function(e){if(!curRoom)return;var items=e.clipboardData&&e.clipboardData.items;if(!items)return;for(var i=0;i<items.length;i++){if(items[i].type.indexOf('image')!==-1){var blob=items[i].getAsFile();if(!blob)continue;var r=new FileReader();r.onloadend=function(){S.emit('send-media',{file:r.result,fileType:blob.type,fileName:'paste.png',replyTo:replyTo?replyTo.id:null});cancelReply()};r.readAsDataURL(blob);e.preventDefault();break}}});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){hidePop();closeDM();cancelReply();canDel();document.getElementById('EMOP').classList.remove('show');document.getElementById('SBAR').classList.remove('show');document.getElementById('STSEL').classList.remove('show')}});
 document.getElementById('NI').onkeypress=function(e){if(e.key==='Enter'){if(document.getElementById('NI').style.display!=='none')doReg();else S.emit('join')}};
-
 function doReg(){var n=document.getElementById('NI').value.trim();if(!n){lErr('Isim!');return}S.emit('register-name',n)}
 S.on('join-error',function(m){lErr(m)});S.on('banned',function(m){document.body.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;text-align:center;color:#ff5252;font-size:1.1em;padding:20px;font-family:sans-serif">'+m+'</div>'});
 S.on('kicked',function(){location.reload()});S.on('need-reload',function(){location.reload()});
